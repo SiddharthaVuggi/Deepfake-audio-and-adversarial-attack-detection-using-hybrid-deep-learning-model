@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepfake Voice & Adversarial Attack Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f0fe;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .preview-container {
+            margin-top: 15px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        button {
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 45%;
+        }
+        button:hover {
+            background-color: #155bb5;
+        }
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .toggle-container label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .spinner {
+            display: none;
+            margin-top: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Deepfake Voice & Adversarial Attack Detection</h1>
+
+        <input type="file" id="audioInput" accept="audio/*" onchange="previewAudio(event)">
+
+        <div class="preview-container">
+            <audio id="audioPlayer" controls style="display: none; width: 100%;"></audio>
+        </div>
+
+        <div class="toggle-container">
+            <label for="attackToggle">Attack Mode</label>
+            <input type="checkbox" id="attackToggle">
+        </div>
+
+        <div class="button-container">
+            <button onclick="submitAudio()">Detect Deepfake</button>
+            <button onclick="resetForm()">Reset</button>
+        </div>
+
+        <div class="spinner" id="audioSpinner">
+            <p>Loading...</p>
+        </div>
+
+        <div class="result" id="detectionResult"></div>
+    </div>
+
+    <script>
+        function previewAudio(event) {
+            const audioInput = document.getElementById('audioInput');
+            const audioPlayer = document.getElementById('audioPlayer');
+            const file = audioInput.files[0];
+
+            if (file) {
+                const url = URL.createObjectURL(file);
+                audioPlayer.src = url;
+                audioPlayer.style.display = 'block';
+            }
+        }
+
+        function submitAudio() {
+            const audioInput = document.getElementById('audioInput');
+            const attackToggle = document.getElementById('attackToggle');
+            const audioSpinner = document.getElementById('audioSpinner');
+            const detectionResult = document.getElementById('detectionResult');
+            
+            const file = audioInput.files[0];
+            if (!file) {
+                alert('Please upload an audio file.');
+                return;
+            }
+
+            audioSpinner.style.display = 'block';
+            detectionResult.innerHTML = '';
+
+            const formData = new FormData();
+            formData.append('audio', file);
+            formData.append('attack_mode', attackToggle.checked ? "on" : "off");
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                audioSpinner.style.display = 'none';
+
+                if (data.error) {
+                    detectionResult.innerHTML = `<span style="color: red;">${data.error}</span>`;
+                } else {
+
+                    const attackStatus = data.attack_mode ? "FGSM Attack Applied! <br> ⚠️ Someone is hacking! Please be careful." : "No Attack";
+                    detectionResult.innerHTML = `🛡️ ${attackStatus} <br> Prediction: ${data.prediction} <br> Confidence: ${(data.confidence * 100).toFixed(2)}%`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                detectionResult.innerHTML = '<span style="color: red;">An error occurred while processing the audio file.</span>';
+                audioSpinner.style.display = 'none';
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('audioInput').value = "";
+            document.getElementById('audioPlayer').style.display = 'none';
+            document.getElementById('attackToggle').checked = false;
+            document.getElementById('detectionResult').innerHTML = "";
+        }
+    </script>
+</body>
+</html>
