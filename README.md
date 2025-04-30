@@ -34,3 +34,8 @@ Our enhanced audio fraud detection system combines:
 
 **Base Paper :** https://academia.kaust.edu.sa/en/publications/audio-deepfake-detection-adversarial-attacks-and-countermeasures
 
+![image](https://github.com/user-attachments/assets/0d8aee31-d9d0-450b-811b-a871bcf0d89b)
+![image](https://github.com/user-attachments/assets/4bbf5602-1875-4527-b031-87c7a9087d26)
+
+
+
