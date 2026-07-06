@@ -1,13 +1,13 @@
 # Deepfake Audio and Adversarial Attack Detection using Hybrid Deep Learning Models
 
-## 🧠 Overview
-Deepfake technology utilizes artificial intelligence to generate fake audio or video content that appears convincingly real. This poses a significant risk to privacy, trust systems, and digital security. Adversarial attacks, such as the Fast Gradient Sign Method (FGSM), subtly manipulate input data to deceive deep learning models, leading to erroneous predictions.
-This project explores and enhances deepfake audio detection through a hybrid Transformer + CNN model, which is trained to recognize both original and manipulated audio—even under adversarial conditions.
+# 🧠 Overview
+Deepfake technology utilizes Artificial Intelligence(AI)  to generate fake audio or video content that appears convincingly real. This poses a significant risk to privacy, trust systems and digital security. Adversarial attacks, such as the Fast Gradient Sign Method (FGSM), subtly manipulate input data to deceive deep learning models and leading to erroneous predictions.
+This project explores and enhances deepfake audio detection through a hybrid Transformer + (Convolutional Neural Network) CNN model, which is trained to recognize both original and manipulated audio—even under adversarial conditions.
 
-## 🛡️ Objective
+# 🛡️ Objective
 To strengthen digital audio verification systems through adversarial robustness, ensuring reliable protection against audio-based impersonation and manipulation attacks.
 
-## 🔬 Research Highlights
+# 🔬 Research Highlights
 - **Adversarial Attacks:** Implementation and testing of FGSM and white-box attacks to assess model robustness.
 - **Dataset Utilization:**
   - 6,672 original and fake audio samples for initial testing.
@@ -17,7 +17,7 @@ To strengthen digital audio verification systems through adversarial robustness,
   - CRNN: 96.27%
   - **Transformer+CNN (Proposed): 99.89%**
 
-## 🚀 Proposed System
+# 🚀 Proposed System
 Our enhanced audio fraud detection system combines:
 - **Spectrogram Analysis**
 - **Adversarial Training Techniques**
@@ -30,12 +30,10 @@ Our enhanced audio fraud detection system combines:
 ✔️ Training with **larger and diverse datasets**  
 ✔️ Application of the **Fake-or-Real (FoR) dataset merging strategy** for better generalization
 
+
 **Dataset :** https://www.kaggle.com/datasets/mohammedabdeldayem/the-fake-or-real-dataset
 
 **Base Paper :** https://academia.kaust.edu.sa/en/publications/audio-deepfake-detection-adversarial-attacks-and-countermeasures
 
 ![image](https://github.com/user-attachments/assets/0d8aee31-d9d0-450b-811b-a871bcf0d89b)
 ![image](https://github.com/user-attachments/assets/00c355c6-5dab-43b3-843a-8ee09e14c3e2)
-
-
-
